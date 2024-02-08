@@ -10,7 +10,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
-  res.send(`
+  return res.send(`
   <h1>Hello Guys</h1>
   <br>
   <p>use "/api/*argument" to use API</p>
