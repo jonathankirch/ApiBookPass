@@ -12,7 +12,7 @@ router.get('/search', async (req, res) => {
       return res.status(400).send('Por favor, preencha o campo de pesquisa.');
     }
 
-    const url = `${apiURL}?q=${encodeURIComponent(searchInput)}&maxResults=5`;
+    const url = `${apiURL}?q=${encodeURIComponent(searchInput)}&maxResults=5&langRestrict=pt`;
 
     const response = await fetch(url);
     const data = await response.json();

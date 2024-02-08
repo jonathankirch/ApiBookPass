@@ -9,20 +9,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get('/', (req, res) => {
-  return res.send(`
-  <h1>Hello Guys</h1>
-  <br>
-  <p>use "/api/*argument" to use API</p>
-  <br>
-  <p>Available Arguments</p>
-  <ul>
-    <li>search</li>
-    <li>populares</li>
-  </ul>
-  `)
-})
-
 app.use('/api', require('./route/search'));
 
 app.use('/api', require('./route/populares'));
