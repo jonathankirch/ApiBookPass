@@ -20,10 +20,11 @@ router.get('/search', async (req, res) => {
       titulo: item.volumeInfo.title,
       autor: item.volumeInfo.authors,
       imagem: item.volumeInfo.imageLinks.thumbnail,
+      info: item.searchInfo.textSnippet,
     }));
 
     res.json({
-      livros,
+      livros
     });
   } catch (err) {
     console.error(`Erro na API: ${err}`);
