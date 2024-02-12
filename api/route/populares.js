@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 // Google Books API
-const apiURL = `https://www.googleapis.com/books/v1/volumes`
+const apiURL = `https://www.googleapis.com/books/v1/volumes`;
 
 router.get('/populares', async (req, res) => {
   try {
-    const response = await fetch(
-      `${apiURL}?q=''&orderBy=relevance&maxResults=5`
-    );
+    const response = await fetch(`${apiURL}?q=''&orderBy=relevance&maxResults=13`);
     const data = await response.json();
+    const total = data.totalItems;
     const livros = data.items.map((item) => ({
       titulo: item.volumeInfo.title,
       autor: item.volumeInfo.authors,
@@ -17,7 +16,7 @@ router.get('/populares', async (req, res) => {
     }));
 
     res.json({
-      livros
+      total, livros,
     });
   } catch (err) {
     console.error(`Erro na API: ${err}`);
