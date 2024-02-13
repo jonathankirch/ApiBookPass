@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios')
 const router = express.Router();
 
 // Google Books API
@@ -12,15 +13,18 @@ router.get('/search', async (req, res) => {
       return res.status(400).send('Por favor, preencha o campo de pesquisa.');
     }
 
-    const url = `${apiURL}?q=${encodeURIComponent(searchInput)}&maxResults=5&langRestrict=pt`;
+    const url = `${apiURL}?q=${encodeURIComponent(searchInput)}`;
 
-    const response = await fetch(url);
-    const data = await response.json();
-    const livros = data.items.map((item) => ({
+    const response = await axios.get(url);
+    const livros = response.data.items.map((item) => ({
       titulo: item.volumeInfo.title,
-      autor: item.volumeInfo.authors,
-      imagem: item.volumeInfo.imageLinks.thumbnail,
-      info: item.searchInfo.textSnippet,
+      autor: item.volumeInfo.authors
+        ? item.volumeInfo.authors.join(', ')
+        : 'Autor desconhecido',
+      imagem: item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail
+        ? item.volumeInfo.imageLinks.thumbnail
+        : 'https://placehold.co/500?text=Livro+sem+capa',
+      descricao: item.volumeInfo.description,
     }));
 
     res.json({
