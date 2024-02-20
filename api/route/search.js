@@ -21,10 +21,10 @@ router.get('/search', async (req, res) => {
       autor: item.volumeInfo.authors
         ? item.volumeInfo.authors.join(', ')
         : 'Autor desconhecido',
-      imagem: item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail
-        ? item.volumeInfo.imageLinks.thumbnail
+      imagem: item.volumeInfo.imageLinks ?
+        item.volumeInfo.imageLinks.thumbnail || item.volumeInfo.imageLink.smallThumbnail
         : 'https://placehold.co/500?text=Livro+sem+capa',
-      descricao: item.volumeInfo.description,
+      descricao: item.volumeInfo.description ?? 'Sem descrição'
     }));
 
     res.json({
