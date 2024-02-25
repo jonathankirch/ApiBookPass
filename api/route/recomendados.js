@@ -21,9 +21,11 @@ router.get('/recomendados/:userPreferences', async (req, res) => {
       autor: item.volumeInfo.authors
         ? item.volumeInfo.authors.join(', ')
         : 'Autor desconhecido',
-      imagem: item.volumeInfo.imageLinks ?
-        item.volumeInfo.imageLinks.thumbnail || item.volumeInfo.imageLink.smallThumbnail
-        : 'https://placehold.co/500?text=Livro+sem+capa',
+        imagem:
+				item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail
+					? item.volumeInfo.imageLinks.thumbnail ||
+					  item.volumeInfo.imageLinks.smallThumbnail
+					: 'https://placehold.co/500?text=Livro+sem+capa',
         descricao: item.volumeInfo.description ?? 'Sem Descrição'
     })) : [];
 
