@@ -40,7 +40,7 @@ router.get('/recomendados/:userPreferences', async (req, res) => {
 			linkCompra:
 				item.saleInfo && item.saleInfo.buyLink
 					? item.saleInfo.buyLink
-					: 'Link de compra não disponível',
+					: '',
     })) : [];
 
     res.json({

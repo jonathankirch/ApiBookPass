@@ -33,7 +33,7 @@ router.get('/populares', async (req, res) => {
 			linkCompra:
 				item.saleInfo && item.saleInfo.buyLink
 					? item.saleInfo.buyLink
-					: 'Link de compra não disponível',
+					: '',
 		}));
 
 		res.json({
