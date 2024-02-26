@@ -18,15 +18,29 @@ router.get('/search', async (req, res) => {
     const response = await axios.get(url);
     const livros = response.data.items.map((item) => ({
       titulo: item.volumeInfo.title,
-      autor: item.volumeInfo.authors
-        ? item.volumeInfo.authors.join(', ')
-        : 'Autor desconhecido',
-        imagem:
+			autor: item.volumeInfo.authors
+				? item.volumeInfo.authors.join(', ')
+				: 'Autor desconhecido',
+			descricao: item.volumeInfo.description || 'Sem descrição',
+			imagem:
 				item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail
 					? item.volumeInfo.imageLinks.thumbnail ||
 					  item.volumeInfo.imageLinks.smallThumbnail
 					: 'https://placehold.co/500?text=Livro+sem+capa',
-      descricao: item.volumeInfo.description ?? 'Sem descrição'
+			numeroPaginas: item.volumeInfo.pageCount || 'Informação não disponível',
+			dataPublicacao:
+				item.volumeInfo.publishedDate || 'Data idisponível',
+			editora: item.volumeInfo.publisher || 'Editora não disponível',
+			valor:
+				item.saleInfo &&
+				item.saleInfo.listPrice &&
+				item.saleInfo.listPrice.amount
+					? item.saleInfo.listPrice.amount
+					: 'Preço não disponível',
+			linkCompra:
+				item.saleInfo && item.saleInfo.buyLink
+					? item.saleInfo.buyLink
+					: 'Link de compra não disponível',
     }));
 
     res.json({
